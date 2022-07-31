@@ -364,7 +364,6 @@ int CgPrjDlg::processImg(CRect rect)
 // KDH 추가
 void CgPrjDlg::OnBnClickedButton1()
 {
-	//
 	CClientDC dc(this);
 	dc.Rectangle(0, 0, 640, 480);
 
@@ -388,15 +387,10 @@ void CgPrjDlg::OnBnClickedButton1()
 	}
 	if (x2 > 580 | y2 > 580)
 	{
-		//x1 -= 100;
 		y1 -= 100;
-		//x2 -= 100;
 		y2 -= 100;
 	}
-
 	dc.Ellipse(x1, y1, x2, y2);
-
-	//CRect rect(0, 0, nWidth, nHeight);
 
 	int nTh = 0x80;
 	int nSumX = 0;
@@ -418,12 +412,11 @@ void CgPrjDlg::OnBnClickedButton1()
 	int dCenterY = nSumY / nCount;
 
 	HPEN hpen;
-	hpen = CreatePen(PS_SOLID, 3, RGB(255, 255, 0));
-
+	hpen = CreatePen(PS_SOLID, 3, RGB(255, 255, 0));  // 노란색
 	HPEN hpenOld;
 	hpenOld = (HPEN)::SelectObject(dc, (HGDIOBJ)hpen);
 	dc.Ellipse(dCenterX - 15, dCenterY - 15, dCenterX + 15, dCenterY + 15);
-	hpen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
+	hpen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));  // 빨간색
 	hpenOld = (HPEN)::SelectObject(dc, (HGDIOBJ)hpen);
 	dc.MoveTo(dCenterX - 5, dCenterY);
 	dc.LineTo(dCenterX + 5, dCenterY);
