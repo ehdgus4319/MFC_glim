@@ -123,6 +123,7 @@ BOOL CgPrjDlg::OnInitDialog()
 	m_valueList.InsertColumn(0, _T("순번"), LVCFMT_CENTER, 50);
 	m_valueList.InsertColumn(1, _T("좌표 X 값"), LVCFMT_CENTER, 100);
 	m_valueList.InsertColumn(2, _T("좌표 Y 값"), LVCFMT_CENTER, 100);
+	m_valueList.InsertColumn(3, _T("원 사이즈"), LVCFMT_CENTER, 100);
 	m_valueList.SetExtendedStyle(m_valueList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 	//m_valueList.InsertColumn(2, _T("횡당보도상"), LVCFMT_CENTER, 100);
 
@@ -443,24 +444,24 @@ void CgPrjDlg::OnBnClickedButton1()
 	tmp.Format(_T("X 값 : %d, Y 값 : %d"), dCenterX, dCenterY);
 	m_centerValue.SetWindowText(tmp);
 
-
+	// ListControl 기록 추가 부분
 	static int intCount = 1;
 	CString strCount;
 	CString xPosition;
 	CString yPosition;
+	CString inputSize;
 	strCount.Format(_T("%d"), intCount);
 	xPosition.Format(_T("%d"), dCenterX);
 	yPosition.Format(_T("%d"), dCenterY);
-
-	CString test = _T("hello");
+	inputSize.Format(_T("%d"), tmpSize);
 
 	int nItemNum = m_valueList.GetItemCount();
 
 	m_valueList.InsertItem(nItemNum, strCount, NULL);
 	m_valueList.SetItemText(nItemNum, 1, xPosition);
 	m_valueList.SetItemText(nItemNum, 2, yPosition);
+	m_valueList.SetItemText(nItemNum, 3, inputSize);
 	intCount++;
-	
 
 }
 
