@@ -47,4 +47,6 @@ public:
 	afx_msg void OnBnClickedBtnThread();
 	int processImg(CRect rect);
 	afx_msg void OnBnClickedButton1();
+	CStatic m_centerValue;
+
 };

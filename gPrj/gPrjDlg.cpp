@@ -62,6 +62,7 @@ CgPrjDlg::CgPrjDlg(CWnd* pParent /*=NULL*/)
 void CgPrjDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_STATIC_VALUE, m_centerValue);
 }
 
 BEGIN_MESSAGE_MAP(CgPrjDlg, CDialogEx)
@@ -363,7 +364,7 @@ void CgPrjDlg::OnBnClickedButton1()
 	CClientDC dc(this);
 	dc.Rectangle(0, 0, 700, 480);
 
-	UpdateData(true);
+	UpdateData(true);  // 컨트롤의 값을 변수로 전송 Getdlgitem함수를 쓸 경우는 안적어도 되긴 함
 	CString circleSize;
 	GetDlgItemText(IDC_EDIT2, circleSize); // edit 박스 값 가져옴
 	int tmpSize;
@@ -371,13 +372,18 @@ void CgPrjDlg::OnBnClickedButton1()
 
 	CRect rect(0, 0, 700, 480);
 
-	int x1 = rand() % 480;                // 좌표를 랜덤하게 설정
+	int x1 = rand() % 480;                // 좌표를 랜덤하게 설정 (왼쪽의 피연산자를 오른쪽의 피연산자로 나눈 후, 그 나머지를 반환)
 	int y1 = rand() % 380;
 	int x2 = x1 + tmpSize;
 	int y2 = y1 + tmpSize;
 	if (tmpSize > 250)
 	{
-		MessageBox(_T("입력 값이 너무 큽니다.250보다 작은값을 입력해 주세요 "));
+		MessageBox(_T("입력 값이 큽니다.250보다 작은값을 입력해 주세요 "));
+		return;
+	}
+	else if (tmpSize < 30)
+	{
+		MessageBox(_T("입력 값이 작습니다.30보다 큰값을 입력해 주세요 "));
 		return;
 	}
 	if (y2 > 380)
@@ -421,5 +427,9 @@ void CgPrjDlg::OnBnClickedButton1()
 	dc.LineTo(dCenterX + 5, dCenterY);
 	dc.MoveTo(dCenterX, dCenterY - 5);
 	dc.LineTo(dCenterX, dCenterY + 5);
+	// Static Text에 값 표시 부분
+	CString tmp;
+	tmp.Format(_T("X 값 : %d, Y 값 : %d"), dCenterX, dCenterY);
+	m_centerValue.SetWindowText(tmp);
 
 }
