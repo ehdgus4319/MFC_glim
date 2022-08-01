@@ -3,6 +3,8 @@
 //
 #include "DlgImage.h"
 
+#include <iostream>
+#include <sstream>
 #pragma once
 
 
@@ -49,4 +51,6 @@ public:
 	afx_msg void OnBnClickedButton1();
 	CStatic m_centerValue;
 
+	CListCtrl m_valueList;
+	afx_msg void OnBnClickedButton2();
 };

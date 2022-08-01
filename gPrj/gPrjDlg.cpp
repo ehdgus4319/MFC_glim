@@ -63,6 +63,7 @@ void CgPrjDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_STATIC_VALUE, m_centerValue);
+	DDX_Control(pDX, IDC_LIST1, m_valueList);
 }
 
 BEGIN_MESSAGE_MAP(CgPrjDlg, CDialogEx)
@@ -76,6 +77,7 @@ BEGIN_MESSAGE_MAP(CgPrjDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_GET_DATA, &CgPrjDlg::OnBnClickedBtnGetData)
 	ON_BN_CLICKED(IDC_BTN_THREAD, &CgPrjDlg::OnBnClickedBtnThread)
 	ON_BN_CLICKED(IDC_BUTTON1, &CgPrjDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CgPrjDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -112,10 +114,19 @@ BOOL CgPrjDlg::OnInitDialog()
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	//ShowWindow(SW_SHOWMAXIMIZED);
-	MoveWindow(0, 0, 1280, 800);
+	//MoveWindow(0, 0, 800, 800);
 	m_pDlgImage = new CDlgImage;
 	m_pDlgImage->Create(IDD_DLGIMAGE, this);
 	m_pDlgImage->ShowWindow(SW_SHOW);
+
+
+	m_valueList.InsertColumn(0, _T("순번"), LVCFMT_CENTER, 50);
+	m_valueList.InsertColumn(1, _T("좌표 X 값"), LVCFMT_CENTER, 100);
+	m_valueList.InsertColumn(2, _T("좌표 Y 값"), LVCFMT_CENTER, 100);
+	m_valueList.SetExtendedStyle(m_valueList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+	//m_valueList.InsertColumn(2, _T("횡당보도상"), LVCFMT_CENTER, 100);
+
+
 
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
@@ -432,4 +443,30 @@ void CgPrjDlg::OnBnClickedButton1()
 	tmp.Format(_T("X 값 : %d, Y 값 : %d"), dCenterX, dCenterY);
 	m_centerValue.SetWindowText(tmp);
 
+
+	static int intCount = 1;
+	CString strCount;
+	CString xPosition;
+	CString yPosition;
+	strCount.Format(_T("%d"), intCount);
+	xPosition.Format(_T("%d"), dCenterX);
+	yPosition.Format(_T("%d"), dCenterY);
+
+	CString test = _T("hello");
+
+	int nItemNum = m_valueList.GetItemCount();
+
+	m_valueList.InsertItem(nItemNum, strCount, NULL);
+	m_valueList.SetItemText(nItemNum, 1, xPosition);
+	m_valueList.SetItemText(nItemNum, 2, yPosition);
+	intCount++;
+	
+
+}
+
+
+void CgPrjDlg::OnBnClickedButton2()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_valueList.DeleteAllItems();
 }
