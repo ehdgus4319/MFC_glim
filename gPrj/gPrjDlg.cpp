@@ -116,10 +116,6 @@ BOOL CgPrjDlg::OnInitDialog()
 	m_pDlgImage->Create(IDD_DLGIMAGE, this);
 	m_pDlgImage->ShowWindow(SW_SHOW);
 
-	m_pDlgImgResult = new CDlgImage;
-	m_pDlgImgResult->Create(IDD_DLGIMAGE, this);
-	m_pDlgImgResult->ShowWindow(SW_SHOW);
-	m_pDlgImgResult->MoveWindow(640, 0, 640, 480);
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -186,7 +182,7 @@ void CgPrjDlg::OnDestroy()
 	CDialogEx::OnDestroy();
 
 	if(m_pDlgImage)		delete m_pDlgImage;
-	if(m_pDlgImgResult)	delete m_pDlgImgResult;
+
 }
 
 void CgPrjDlg::callFunc(int n)
@@ -365,8 +361,7 @@ int CgPrjDlg::processImg(CRect rect)
 void CgPrjDlg::OnBnClickedButton1()
 {
 	CClientDC dc(this);
-	dc.Rectangle(0, 0, 640, 480);
-
+	dc.Rectangle(0, 0, 700, 480);
 
 	UpdateData(true);
 	CString circleSize;
@@ -374,25 +369,29 @@ void CgPrjDlg::OnBnClickedButton1()
 	int tmpSize;
 	tmpSize = _ttoi(circleSize);  // Cstring -> int 변환
 
-	CRect rect(480, 480, 480, 480);
+	CRect rect(0, 0, 700, 480);
 
 	int x1 = rand() % 480;                // 좌표를 랜덤하게 설정
 	int y1 = rand() % 380;
 	int x2 = x1 + tmpSize;
 	int y2 = y1 + tmpSize;
-	if (tmpSize > 300)
+	if (tmpSize > 250)
 	{
-		MessageBox(_T("입력 값이 너무 큽니다.300보다 작은값을 입력해 주세요 "));
+		MessageBox(_T("입력 값이 너무 큽니다.250보다 작은값을 입력해 주세요 "));
 		return;
 	}
-	if (x2 > 580 | y2 > 580)
+	if (y2 > 380)
 	{
-		y1 -= 100;
-		y2 -= 100;
+		y1 -= 150;
+		y2 -= 150;
+	}
+	if (x1 < 0)
+	{
+		x1 += 150;
+		x2 += 150;
 	}
 	dc.Ellipse(x1, y1, x2, y2);
 
-	int nTh = 0x80;
 	int nSumX = 0;
 	int nSumY = 0;
 	int nCount = 0;
@@ -401,28 +400,26 @@ void CgPrjDlg::OnBnClickedButton1()
 
 	for (int j = y1; j < y2; j++) {
 		for (int i = x1; i < x2; i++) {
-			if (fm[j * nPitch + i] > nTh) {
-				nSumX += i;
-				nSumY += j;
-				nCount++;
-			}
+			nSumX += i;
+			nSumY += j;
+			nCount++;
 		}
 	}
-	int dCenterX = nSumX / nCount;
-	int dCenterY = nSumY / nCount;
+	int dCenterX = nSumX / nCount;  // 원의 중심값 (X)
+	int dCenterY = nSumY / nCount;  // 원의 중심값 (Y)
 
 	HPEN hpen;
 	hpen = CreatePen(PS_SOLID, 3, RGB(255, 255, 0));  // 노란색
 	HPEN hpenOld;
 	hpenOld = (HPEN)::SelectObject(dc, (HGDIOBJ)hpen);
-	dc.Ellipse(dCenterX - 15, dCenterY - 15, dCenterX + 15, dCenterY + 15);
+	dc.Ellipse(dCenterX - 15, dCenterY - 15, dCenterX + 15, dCenterY + 15);  // 무게중심 노란색 원 표시
 	hpen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));  // 빨간색
 	hpenOld = (HPEN)::SelectObject(dc, (HGDIOBJ)hpen);
+
+	// 원 가운데 십자 부분
 	dc.MoveTo(dCenterX - 5, dCenterY);
 	dc.LineTo(dCenterX + 5, dCenterY);
 	dc.MoveTo(dCenterX, dCenterY - 5);
 	dc.LineTo(dCenterX, dCenterY + 5);
-	
-
 
 }

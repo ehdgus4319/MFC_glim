@@ -49,7 +49,7 @@ BOOL CDlgImage::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	SetWindowText(_T("Origin Image"));
-	MoveWindow(0, 0, 640, 480);
+	MoveWindow(0, 0, 700, 480);
 	InitImage();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
