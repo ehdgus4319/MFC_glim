@@ -390,12 +390,12 @@ void CgPrjDlg::OnBnClickedButton1()
 	int y2 = y1 + tmpSize;
 	if (tmpSize > 250)
 	{
-		MessageBox(_T("입력 값이 큽니다.250보다 작은값을 입력해 주세요 "));
+		MessageBox(_T("입력 값이 큽니다.\n250보다 작은값을 입력해 주세요 "));
 		return;
 	}
 	else if (tmpSize < 30)
 	{
-		MessageBox(_T("입력 값이 작습니다.30보다 큰값을 입력해 주세요 "));
+		MessageBox(_T("입력 값이 작습니다.\n30보다 큰값을 입력해 주세요 "));
 		return;
 	}
 	if (y2 > 380)
@@ -434,17 +434,17 @@ void CgPrjDlg::OnBnClickedButton1()
 	hpen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));  // 빨간색
 	hpenOld = (HPEN)::SelectObject(dc, (HGDIOBJ)hpen);
 
-	// 원 가운데 십자 부분
+	// 원 가운데 십자 
 	dc.MoveTo(dCenterX - 5, dCenterY);
 	dc.LineTo(dCenterX + 5, dCenterY);
 	dc.MoveTo(dCenterX, dCenterY - 5);
 	dc.LineTo(dCenterX, dCenterY + 5);
-	// Static Text에 값 표시 부분
+	// Static Text에 값 표시 
 	CString tmp;
 	tmp.Format(_T("X 값 : %d, Y 값 : %d"), dCenterX, dCenterY);
 	m_centerValue.SetWindowText(tmp);
 
-	// ListControl 기록 추가 부분
+	// ListControl 기록 추가 
 	static int intCount = 1;
 	CString strCount;
 	CString xPosition;
